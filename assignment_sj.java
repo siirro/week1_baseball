@@ -24,7 +24,6 @@ public class assignment_sj {
 
                 for(int j = 0; j<3 ; j++){
                     userNumInt[j] = userNumber.charAt(j)-'0';
-//                System.out.println(userNumInt[0]);
                     HashSet.contains(userNumInt[j]) -> B개수 -> 위치 파악 불가 2
                     Hash -> Array
                     arry[k] userNumInt[k] -> S개수 1
