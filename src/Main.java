@@ -27,67 +27,53 @@ public class Main {
         int num3 = numberList.get(2);
         // 뽑은 3개의 숫자로 세 자리 수 생성!
         int number = num1*100 + num2*10 + num3;
-//        System.out.println(number);
 
         System.out.println("컴퓨터가 숫자를 뽑았습니다! 답을 맞춰보세요!!");
 
+        String numberString = String.valueOf(number);
         // 각 자리수마다 비교하기 위해 숫자를 숫자 리스트로 만들어줌 2) 정답숫자
-        List<Character> numberAr = String.valueOf(number).chars()
-                .mapToObj(c -> (char) c)
-                .collect(Collectors.toList());
-
+        char[] numberAr = numberString.toCharArray();
 
         // 2. 스캐너와 기본 변수 설정!
         Scanner sc = new Scanner(System.in);
         int tryNum = 0;
         int i=1;
-        int B=0;
-        int S=0;
-
+        int ballCount=0;
+        int strikeCount=0;
 
         // 3. 반복문으로 tryNum(맞추기 시도)과 number(정답 숫자) 판단하기!
         while (true) {
             System.out.print(i+"번째 시도 : ");
             tryNum = sc.nextInt();
+            String tryNumString = String.valueOf(tryNum);
 
             if(String.valueOf(tryNum).length()==3) {
-
-                B = 0;
-                S = 0;
-
-
+                ballCount = 0;
+                strikeCount = 0;
 
                 // 각 자리수마다 비교하기 위해 숫자를 숫자 리스트로 만들어줌 1) 시도숫자
-                List<Character> tryAr = String.valueOf(tryNum).chars()
-                        .mapToObj(c -> (char) c)
-                        .collect(Collectors.toList());
+                char[] tryAr = tryNumString.toCharArray();
 
                 // 서로 같은 자리의 수를 의미하는, 두 숫자의 같은 리스트 번호를 계속 비교한다.
                 // 같은 자리에 같은 숫자가 있으면 S를 하나 올리고, 같은 자리에는 같은 숫자가 들어있지않지만, 전체 숫자에 지금의 리스트 번호의 숫자가 들어있으면 B가 1씩 올라간다.
                 for (int j = 0; j < 3; j++) {
-                    if (numberAr.get(j) == tryAr.get(j)) {
-                        S++;
-                    } else if (numberAr.get(j) != tryAr.get(j) && String.valueOf(number).contains(String.valueOf(tryAr.get(j)))) {
-                        B++;
+                    if (numberAr[j] == tryAr[j]) {
+                        strikeCount++;
+                    }
+                    if (numberAr[j] != tryAr[j] && numberString.contains(String.valueOf(tryAr[j]))) {
+                        ballCount++;
                     }
                 }
 
-                // 시도한 숫자의 결과 출력
-                String result = B + "B" + S + "S";
+                // 결과 출력
+                String result = ballCount + "B" + strikeCount + "S";
                 System.out.println(result);
 
-                if(result.equals("0B3S")) {
+                if("0B3S".equals(result)) {
                     System.out.println(i + "번의 시도만에 맞췄습니다!");
                     System.out.println("게임을 종료합니다.");
                     break;
                 }
-
-                // 다 맞췄을 경우
-//                if (tryNum == number) {
-//                    System.out.println(i + "번의 시도만에 맞췄습니다!");
-//                    System.out.println("게임을 종료합니다.");
-//                    break;
-//                }
 
                 i++;
 
